@@ -3,9 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MotionlabsTypeOrmModule } from 'src/common/database/typeorm.module';
 import { ConfigModule } from '@nestjs/config';
+import { SwaggerModule } from 'src/common/swagger/swagger.module';
 
 @Module({
-  imports: [MotionlabsTypeOrmModule, ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    MotionlabsTypeOrmModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    SwaggerModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
