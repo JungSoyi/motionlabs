@@ -3,54 +3,42 @@ import { Patient } from "src/patient/entities/patient.entity";
 export default (entity: Patient) => {
   if (!entity.birthday) return true;
 
-  const basicRegex = /^(\d{2})(\d{2})(\d{2})(?:-?([1-4]|\*{1})([\d*]{0,6}))?$/;
-  const match = entity.birthday.match(basicRegex);
-  if (!match) return false;
+  const basicRegex = /^(\d{2})(\d{2})(\d{2})(?:-?([1-4*])([\d*]{0,6}))?$/;
+  const rrnRegex = /^(\d{6})([1-4])(\d{6})$/;
+
+  let match = entity.birthday.match(basicRegex);
+
+  if (!match) {
+    match = entity.birthday.match(rrnRegex);
+    if (!match) return false;
+
+    const [, datePart, genderDigit] = match;
+    return validateDateAndGender(datePart, genderDigit);
+  }
 
   const [, yy, mm, dd, genderDigit, rest] = match;
-  const year = parseInt(yy, 10);
-  const month = parseInt(mm, 10);
-  const day = parseInt(dd, 10);
+  const datePart = `${yy}${mm}${dd}`;
+
+  if (!genderDigit || genderDigit === "*") return validateDateAndGender(datePart, null);
+  return validateDateAndGender(datePart, genderDigit);
+};
+
+function validateDateAndGender(datePart: string, genderDigit: string | null): boolean {
+  const year = parseInt(datePart.slice(0, 2), 10);
+  const month = parseInt(datePart.slice(2, 4), 10);
+  const day = parseInt(datePart.slice(4, 6), 10);
 
   const isBefore2000 = year >= 50 && year <= 99;
-  const isAfter2000 = year >= 0 && year <= 49;
   const fullYear = isBefore2000 ? 1900 + year : 2000 + year;
 
   const lastDayOfMonth = new Date(fullYear, month, 0).getDate();
   if (month < 1 || month > 12 || day < 1 || day > lastDayOfMonth) return false;
 
-  // 6자 YYMMDD
-  if (entity.birthday.length === 6) return true;
+  if (!genderDigit) return true;
 
-  // 7자 YYMMDDG
-  if (entity.birthday.length === 7 && genderDigit) {
-    const genderNum = parseInt(genderDigit, 10);
-    return isBefore2000 ? [1, 2].includes(genderNum) : [3, 4].includes(genderNum);
-  }
+  const genderNum = parseInt(genderDigit, 10);
+  if (isBefore2000 && ![1, 2].includes(genderNum)) return false;
+  if (!isBefore2000 && ![3, 4].includes(genderNum)) return false;
 
-  // 8자 YYMMDD-G
-  if (entity.birthday.length === 8 && entity.birthday[6] === "-" && genderDigit) {
-    const genderNum = parseInt(genderDigit, 10);
-    return isBefore2000 ? [1, 2].includes(genderNum) : [3, 4].includes(genderNum);
-  }
-
-  // 9자 이상 YYMMDD-GXXXXXX
-  if (entity.birthday.length >= 9) {
-    if (entity.birthday[6] !== "-" || !genderDigit || rest.length !== 6) return false;
-
-    // 하이픈 뒤 7자리 모두 * 허용 (*******)
-    if (genderDigit === "*" && rest === "******") return true;
-
-    // 성별번호 체크
-    const genderNum = parseInt(genderDigit, 10);
-    if (!(genderNum >= 1 && genderNum <= 4)) return false;
-
-    if (isBefore2000 && !(genderNum === 1 || genderNum === 2)) return false;
-    if (isAfter2000 && !(genderNum === 3 || genderNum === 4)) return false;
-
-    // 나머지 6자리 숫자 or * 혼용 체크
-    return /^[\d*]{6}$/.test(rest);
-  }
-
-  return false;
-};
+  return true;
+}

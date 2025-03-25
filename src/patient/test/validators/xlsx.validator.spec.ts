@@ -160,6 +160,13 @@ describe("Validate Patient Xlsx Data", () => {
           expect(xlsxPatientBirthdayValidator(entity)).toBeTruthy();
         }
       );
+      it.each(["950131*******", "0001013232323", "9902281010101", "2002294******"])(
+        "9자 이상 XXXXXX******* 형식: %p",
+        (birthday: string) => {
+          entity.birthday = birthday;
+          expect(xlsxPatientBirthdayValidator(entity)).toBeTruthy();
+        }
+      );
     });
     describe("patientNumber", () => {
       it.each(["", undefined])("값이 없어도 됨: %p", (patientNumber: string) => {
