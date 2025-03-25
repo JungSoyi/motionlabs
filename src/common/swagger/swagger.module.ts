@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { SwaggerService } from 'src/common/swagger/swagger.service';
+import { Module } from "@nestjs/common";
+import { SwaggerService } from "src/common/swagger/swagger.service";
 
 @Module({
   providers: [SwaggerService],

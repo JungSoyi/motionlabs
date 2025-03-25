@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class PatientService {
   create() {
-    return 'This action adds a new patient';
+    return "This action adds a new patient";
   }
 
   find() {
