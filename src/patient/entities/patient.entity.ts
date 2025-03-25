@@ -1,5 +1,7 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import regexBirthday from "src/patient/util/regexBirthday";
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
+@Unique(["name", "phoneNumber", "patientNumber"])
 @Entity({ name: "patient" })
 export class Patient {
   @PrimaryGeneratedColumn()
@@ -17,10 +19,10 @@ export class Patient {
   @Column({ name: "patient_number", type: "varchar", length: 255, default: "" })
   patientNumber: string;
 
-  @Column({ type: "varchar", length: 255 })
+  @Column({ type: "varchar", length: 255, nullable: true })
   address: string;
 
-  @Column({ type: "varchar", length: 255, default: "" })
+  @Column({ type: "varchar", length: 255, nullable: true })
   memo: string;
 
   @CreateDateColumn({ name: "created_at" })
@@ -28,4 +30,15 @@ export class Patient {
 
   @UpdateDateColumn({ name: "updated_at" })
   updatedAt: Date;
+
+  static create(data: Partial<Patient>) {
+    const patient = new Patient();
+    patient.name = data.name;
+    patient.phoneNumber = data.phoneNumber;
+    patient.birthday = data.birthday ? regexBirthday(data.birthday) : null;
+    patient.patientNumber = data.patientNumber || "";
+    patient.address = data.address;
+    patient.memo = data.memo;
+    return patient;
+  }
 }
