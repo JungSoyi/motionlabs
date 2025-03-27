@@ -1,7 +1,7 @@
 import regexBirthday from "src/patient/util/regexBirthday";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
-@Unique(["name", "phoneNumber", "patientNumber"])
+@Unique(["name", "phoneNumber", "chartNumber"])
 @Entity({ name: "patient" })
 export class Patient {
   @PrimaryGeneratedColumn()
@@ -16,8 +16,8 @@ export class Patient {
   @Column({ type: "varchar", length: 8 })
   birthday: string;
 
-  @Column({ name: "patient_number", type: "varchar", length: 255, default: "" })
-  patientNumber: string;
+  @Column({ name: "chart_number", type: "varchar", length: 255, default: "" })
+  chartNumber: string;
 
   @Column({ type: "varchar", length: 255, nullable: true })
   address: string;
@@ -36,7 +36,7 @@ export class Patient {
     patient.name = data.name;
     patient.phoneNumber = data.phoneNumber;
     patient.birthday = data.birthday ? regexBirthday(data.birthday) : null;
-    patient.patientNumber = data.patientNumber || "";
+    patient.chartNumber = data.chartNumber || "";
     patient.address = data.address;
     patient.memo = data.memo;
     return patient;

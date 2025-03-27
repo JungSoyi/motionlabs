@@ -3,7 +3,7 @@ import xlsxPatientAddressValidator from "src/patient/validators/xlsxPatientAddre
 import xlsxPatientBirthdayValidator from "src/patient/validators/xlsxPatientBirthday.validator";
 import xlsxPatientMemoValidator from "src/patient/validators/xlsxPatientMemo.validator";
 import xlsxPatientNameValidator from "src/patient/validators/xlsxPatientName.validator";
-import xlsxPatientNumberValidator from "src/patient/validators/xlsxPatientNumber.validator";
+import xlsxChartNumberValidator from "src/patient/validators/xlsxChartNumber.validator";
 import xlsxPatientPhoneNumberValidator from "src/patient/validators/xlsxPatientPhoneNumber.validator";
 
 describe("Validate Patient Xlsx Data", () => {
@@ -170,19 +170,19 @@ describe("Validate Patient Xlsx Data", () => {
     });
     describe("patientNumber", () => {
       it.each(["", undefined])("값이 없어도 됨: %p", (patientNumber: string) => {
-        entity.patientNumber = patientNumber;
-        expect(xlsxPatientNumberValidator(entity)).toBeTruthy();
+        entity.chartNumber = patientNumber;
+        expect(xlsxChartNumberValidator(entity)).toBeTruthy();
       });
 
       it("255자 초과", () => {
-        entity.patientNumber = "a".repeat(256);
-        expect(entity.patientNumber.length).toBe(256);
-        expect(xlsxPatientNumberValidator(entity)).toBeFalsy();
+        entity.chartNumber = "a".repeat(256);
+        expect(entity.chartNumber.length).toBe(256);
+        expect(xlsxChartNumberValidator(entity)).toBeFalsy();
       });
       it("255자 이하", () => {
-        entity.patientNumber = "a".repeat(255);
-        expect(entity.patientNumber.length).toBe(255);
-        expect(xlsxPatientNumberValidator(entity)).toBeTruthy();
+        entity.chartNumber = "a".repeat(255);
+        expect(entity.chartNumber.length).toBe(255);
+        expect(xlsxChartNumberValidator(entity)).toBeTruthy();
       });
     });
     describe("address", () => {
