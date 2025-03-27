@@ -1,4 +1,4 @@
-import { Patient } from "src/patient/entities/patient.entity";
+import { Patient } from "src/patient/domain/entities/patient.entity";
 
 export default (entity: Patient): boolean => {
   const PHONE_REGEX = /^(01[016789]|10)-?\d{3,4}-?\d{4}$/;

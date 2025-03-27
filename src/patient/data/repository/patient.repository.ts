@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { IPatientRepository } from "src/patient/data/repository/patientRepository.interface";
-import { Patient } from "src/patient/entities/patient.entity";
+import { Patient } from "src/patient/domain/entities/patient.entity";
 import { DataSource } from "typeorm/data-source/DataSource";
 import { Repository } from "typeorm/repository/Repository";
 

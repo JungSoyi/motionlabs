@@ -1,4 +1,4 @@
-import regexBirthday from "src/patient/util/regexBirthday";
+import regexBirthday from "src/patient/application/util/regexBirthday";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 
 @Unique(["name", "phoneNumber", "chartNumber"])

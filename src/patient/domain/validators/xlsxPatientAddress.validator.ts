@@ -1,4 +1,4 @@
-import { Patient } from "src/patient/entities/patient.entity";
+import { Patient } from "src/patient/domain/entities/patient.entity";
 
 export default (entity: Patient) => {
   return entity.address ? entity.address.length <= 255 : true;

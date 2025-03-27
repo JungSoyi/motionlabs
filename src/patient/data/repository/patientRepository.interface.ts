@@ -1,4 +1,4 @@
-import { Patient } from "src/patient/entities/patient.entity";
+import { Patient } from "src/patient/domain/entities/patient.entity";
 
 export interface IPatientRepository {
   save(data: Patient): Promise<Patient>;

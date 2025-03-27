@@ -1,9 +1,9 @@
 import { Test } from "@nestjs/testing";
 import { PatientRepository } from "src/patient/data/repository/patient.repository";
 import { IPatientRepository } from "src/patient/data/repository/patientRepository.interface";
-import { Patient } from "src/patient/entities/patient.entity";
+import { Patient } from "src/patient/domain/entities/patient.entity";
 import { mockPatientRepository } from "src/patient/test/stubs/repository.stub";
-import { UploadUsecase } from "src/patient/usecase/upload.usecase";
+import { UploadUsecase } from "src/patient/domain/usecase/upload.usecase";
 
 describe("UploadUsecase", () => {
   let usecase: UploadUsecase;
@@ -76,7 +76,7 @@ describe("UploadUsecase", () => {
   });
 
   describe("filterValidatedData", () => {
-    const validateFunction = jest.requireActual("src/patient/validators/xlsx.validator");
+    const validateFunction = jest.requireActual("src/patient/domain/validators/xlsx.validator");
     let inputData: any[];
     let result;
     beforeEach(() => {

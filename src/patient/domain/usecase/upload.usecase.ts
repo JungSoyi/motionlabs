@@ -1,10 +1,10 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PatientRepository } from "src/patient/data/repository/patient.repository";
 import { IPatientRepository } from "src/patient/data/repository/patientRepository.interface";
-import { UploadPatientDataOutput } from "src/patient/dto/output/upload.output";
-import { Patient } from "src/patient/entities/patient.entity";
-import { XlsxUploadDataType } from "src/patient/types/xlsxUploadData.type";
-import xlsxValidator from "src/patient/validators/xlsx.validator";
+import { UploadPatientDataOutput } from "src/patient/application/dto/output/upload.output";
+import { Patient } from "src/patient/domain/entities/patient.entity";
+import { XlsxUploadDataType } from "src/patient/domain/types/xlsxUploadData.type";
+import xlsxValidator from "src/patient/domain/validators/xlsx.validator";
 import { readFile, utils } from "xlsx";
 
 @Injectable()

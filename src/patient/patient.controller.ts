@@ -1,6 +1,6 @@
 import { Controller, Get, Post, UploadedFile } from "@nestjs/common";
-import { PatientService } from "./patient.service";
-import { UploadUsecase } from "src/patient/usecase/upload.usecase";
+import { PatientService } from "./application/patient.service";
+import { UploadUsecase } from "src/patient/domain/usecase/upload.usecase";
 
 @Controller("patient")
 export class PatientController {

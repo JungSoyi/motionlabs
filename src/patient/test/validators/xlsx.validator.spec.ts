@@ -1,10 +1,10 @@
-import { Patient } from "src/patient/entities/patient.entity";
-import xlsxPatientAddressValidator from "src/patient/validators/xlsxPatientAddress.validator";
-import xlsxPatientBirthdayValidator from "src/patient/validators/xlsxPatientBirthday.validator";
-import xlsxPatientMemoValidator from "src/patient/validators/xlsxPatientMemo.validator";
-import xlsxPatientNameValidator from "src/patient/validators/xlsxPatientName.validator";
-import xlsxChartNumberValidator from "src/patient/validators/xlsxChartNumber.validator";
-import xlsxPatientPhoneNumberValidator from "src/patient/validators/xlsxPatientPhoneNumber.validator";
+import { Patient } from "src/patient/domain/entities/patient.entity";
+import xlsxPatientAddressValidator from "src/patient/domain/validators/xlsxPatientAddress.validator";
+import xlsxPatientBirthdayValidator from "src/patient/domain/validators/xlsxPatientBirthday.validator";
+import xlsxPatientMemoValidator from "src/patient/domain/validators/xlsxPatientMemo.validator";
+import xlsxPatientNameValidator from "src/patient/domain/validators/xlsxPatientName.validator";
+import xlsxChartNumberValidator from "src/patient/domain/validators/xlsxChartNumber.validator";
+import xlsxPatientPhoneNumberValidator from "src/patient/domain/validators/xlsxPatientPhoneNumber.validator";
 
 describe("Validate Patient Xlsx Data", () => {
   let entity: Patient;
