@@ -5,7 +5,7 @@ import { UploadPatientDataOutput } from "src/patient/application/dto/output/uplo
 import { Patient } from "src/patient/domain/entities/patient.entity";
 import { XlsxUploadDataType } from "src/patient/domain/types/xlsxUploadData.type";
 import xlsxValidator from "src/patient/domain/validators/xlsx.validator";
-import { readFile, utils } from "xlsx";
+import { read, utils } from "xlsx";
 
 @Injectable()
 export class UploadUsecase {
@@ -13,7 +13,7 @@ export class UploadUsecase {
     @Inject(PatientRepository)
     private readonly repository: IPatientRepository
   ) {}
-  async execute(file): Promise<UploadPatientDataOutput> {
+  async execute(file: Express.Multer.File): Promise<UploadPatientDataOutput> {
     const patientJsonData = this.xlsxToJson(file);
     const processedData = this.processData(patientJsonData);
     await this.repository.upload(processedData);
@@ -76,8 +76,9 @@ export class UploadUsecase {
     return Array.from(patientNumMap.values()).concat(Array.from(noPatientNumMap.values()));
   }
 
-  xlsxToJson(file): Patient[] {
-    const workbook = readFile(file);
+  xlsxToJson(file: Express.Multer.File): Patient[] {
+    console.log(file);
+    const workbook = read(file.buffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = utils.sheet_to_json(sheet, {
       defval: null,
