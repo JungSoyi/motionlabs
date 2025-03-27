@@ -17,4 +17,27 @@ export class PatientRepository extends Repository<Patient> implements IPatientRe
   async findAll() {
     return this.findAll();
   }
+  async upload(data: Patient[]) {
+    const chunkSize = Math.ceil(data.length / 1000);
+    const chunkedData = this.chunkArray(data, chunkSize);
+    await Promise.allSettled(
+      chunkedData.map((chunk) =>
+        this.createQueryBuilder()
+          .insert()
+          .into(Patient)
+          .values(chunk)
+          .orUpdate(["birthday", "address", "memo"], ["name", "phoneNumber", "chartNumber"])
+          .updateEntity(false)
+          .execute()
+      )
+    );
+  }
+
+  private chunkArray<T>(arr: T[], size: number): T[][] {
+    const result: T[][] = [];
+    for (let i = 0; i < arr.length; i += size) {
+      result.push(arr.slice(i, i + size));
+    }
+    return result;
+  }
 }

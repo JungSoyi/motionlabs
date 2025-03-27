@@ -4,5 +4,6 @@ export const mockPatientRepository = (): IPatientRepository => {
   return {
     save: jest.fn(),
     findAll: jest.fn(),
+    upload: jest.fn(),
   };
 };

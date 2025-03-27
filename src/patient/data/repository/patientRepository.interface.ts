@@ -5,4 +5,5 @@ export interface IPatientRepository {
   save(data: Patient[]): Promise<Patient[]>;
   save(data: any): Promise<any>;
   findAll(): Promise<Patient[]>;
+  upload(data: Patient[]);
 }

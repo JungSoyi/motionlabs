@@ -1,7 +1,7 @@
 import regexBirthday from "src/patient/application/util/regexBirthday";
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-@Unique(["name", "phoneNumber", "chartNumber"])
+@Index(["name", "phoneNumber", "chartNumber"], { unique: true })
 @Entity({ name: "patient" })
 export class Patient {
   @PrimaryGeneratedColumn()

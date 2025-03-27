@@ -22,7 +22,7 @@ describe("UploadUsecase", () => {
   describe("execute", () => {
     const inputFile = "src/patient/patient_data.xlsx";
     beforeEach(() => {
-      jest.spyOn(repository, "save").mockResolvedValue([]);
+      jest.spyOn(repository, "upload").mockResolvedValue([]);
       jest.spyOn(usecase, "xlsxToJson").mockReturnValue([]);
       jest.spyOn(usecase, "processData").mockReturnValue([patient_stub_1()]);
       usecase.execute(inputFile);
@@ -38,7 +38,7 @@ describe("UploadUsecase", () => {
         expect(usecase.processData).toHaveBeenCalledWith([]);
       });
       it("processData 반환 값으로 processData 호출", () => {
-        expect(repository.save).toHaveBeenCalledWith([patient_stub_1()]);
+        expect(repository.upload).toHaveBeenCalledWith([patient_stub_1()]);
       });
     });
     describe("return 확인", () => {

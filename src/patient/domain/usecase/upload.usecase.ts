@@ -16,7 +16,8 @@ export class UploadUsecase {
   async execute(file): Promise<UploadPatientDataOutput> {
     const patientJsonData = this.xlsxToJson(file);
     const processedData = this.processData(patientJsonData);
-    await this.repository.save(processedData);
+    await this.repository.upload(processedData);
+
     return {
       totalRows: patientJsonData.length,
       processedRows: processedData?.length || 0,
