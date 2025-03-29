@@ -5,10 +5,11 @@ import { UploadUsecase } from "src/patient/domain/usecase/upload.usecase";
 import { PatientRepository } from "src/patient/data/repository/patient.repository";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Patient } from "src/patient/domain/entities/patient.entity";
+import { GetPatientUsecase } from "src/patient/domain/usecase/get.usecase";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Patient])],
   controllers: [PatientController],
-  providers: [PatientService, UploadUsecase, PatientRepository],
+  providers: [PatientService, UploadUsecase, GetPatientUsecase, PatientRepository],
 })
 export class PatientModule {}

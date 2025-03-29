@@ -1,4 +1,5 @@
 import { Injectable } from "@nestjs/common";
+import { DataWithTotalCount } from "src/common/dto/output/pagination.output";
 import { IPatientRepository } from "src/patient/data/repository/patientRepository.interface";
 import { Patient } from "src/patient/domain/entities/patient.entity";
 import { DataSource } from "typeorm/data-source/DataSource";
@@ -39,5 +40,23 @@ export class PatientRepository extends Repository<Patient> implements IPatientRe
       result.push(arr.slice(i, i + size));
     }
     return result;
+  }
+
+  async findByKeyword(keyword: string = "", page: number, take: number): Promise<DataWithTotalCount<Patient>> {
+    const query = this.createQueryBuilder("patient")
+      .where("patient.name LIKE :keyword", { keyword: `%${keyword}%` })
+      .orWhere("patient.phoneNumber LIKE :keyword")
+      .orWhere("patient.chartNumber LIKE :keyword");
+
+    const [total, data] = await Promise.all([
+      query.getCount(),
+      query
+        .clone()
+        .take(take)
+        .skip((page - 1) * take)
+        .getMany(),
+    ]);
+
+    return { data, total };
   }
 }

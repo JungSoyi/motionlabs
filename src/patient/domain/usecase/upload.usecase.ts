@@ -77,7 +77,6 @@ export class UploadUsecase {
   }
 
   xlsxToJson(file: Express.Multer.File): Patient[] {
-    console.log(file);
     const workbook = read(file.buffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = utils.sheet_to_json(sheet, {
